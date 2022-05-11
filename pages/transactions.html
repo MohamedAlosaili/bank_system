@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Font Awesome cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- CSS files -->
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/transactions.css">
+    <!-- Google fonts (Open Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <title>Monfer Bank | Transactions</title>
+</head>
+
+<body>
+
+    <!-- Start Header -->
+    <header class="header">
+        <div class="container">
+            <a href="home.html" class="logo">
+                <i class="logo-icon fa-solid fa-building-columns"></i>
+                Monfer
+            </a>
+            <nav class="nav-links" id="nav-links">
+                <a href="home.html" class="nav-item">Home</a>
+                <a href="customers.html" class="nav-item">Customers</a>
+                <a href="transactions.html" class="nav-item active">Transactions</a>
+            </nav>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+    <!-- End Header -->
+
+    <!-- Space top -->
+    <div class="space-top"></div>
+
+    <!-- Start Transaction History -->
+    <section class="transactions-history">
+        <div class="container">
+            <h1 class="title">Transactions History</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Mohamed</td>
+                        <td>Faisal</td>
+                        <td>10000</td>
+                        <td>22/12/2022</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Saleh</td>
+                        <td>Faisal</td>
+                        <td>20000</td>
+                        <td>22/12/2022</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Osama</td>
+                        <td>Faisal</td>
+                        <td>5000</td>
+                        <td>22/12/2022</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Ibrahim</td>
+                        <td>Mansor</td>
+                        <td>10000</td>
+                        <td>22/12/2022</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <!-- Start Transaction History -->
+
+    <!-- Start Footer -->
+    <footer class="footer">
+        <div class="container">
+            Created by <span class="name">Mohamed</span> <a class="fa-brands fa-github" target="_blank"
+                href="https://github.com/MohamedAlosaili/bank_system"></a>
+            <span id="year"></span>
+        </div>
+    </footer>
+    <!-- End Footer -->
+
+
+</body>
+
+</html>
