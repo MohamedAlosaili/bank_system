@@ -276,20 +276,18 @@ header .container {
 /* Start Footer */
 .footer {
   position: absolute;
-  bottom: 0;
+  /* bottom: 0; */
   left: 0;
   width: 100%;
-}
-.footer .container {
   height: 5rem;
   font-size: 1.5rem;
   line-height: 5rem;
   text-align: center;
 }
-.footer .container .name {
+.footer .name {
   position: relative;
 }
-.footer .container .name::before {
+.footer .name::before {
   content: "";
   position: absolute;
   bottom: 0;

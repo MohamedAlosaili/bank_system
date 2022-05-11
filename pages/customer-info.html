@@ -49,17 +49,16 @@
     <!-- Start Customer Section -->
     <section class="customer-section">
         <div class="container">
-            <div class="sect customer-info">
+            <div class="sect customer-info" id="customer-info">
                 <img src="https://via.placeholder.com/250" alt="" class="img">
-                <div class="info">
+                <div class="info" id="info-section">
                     <div class="left">
-                        <h3 class="name">Name</h3>
-                        <h4 class="email">Name@gmail.com</h4>
-                        <div class="balance">Balance: 15000</div>
+                        <h3 class="name"></h3>
+                        <h4 class="email"></h4>
+                        <div class="balance"></div>
                     </div>
                     <button class="btn transfer" id="transfer-link">Transfer</button>
                 </div>
-
             </div>
             <div class="sect trans send-section">
                 <table class="send-table">
@@ -71,22 +70,14 @@
                             <th>Date</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Mohamed</td>
-                            <td>2000</td>
-                            <td>2/10/2022</td>
-                        </tr>
-                        <tr>
-                            <td>Mohamed</td>
-                            <td>2000</td>
-                            <td>2/10/2022</td>
-                        </tr>
-                        <tr>
-                            <td>Mohamed</td>
-                            <td>2000</td>
-                            <td>2/10/2022</td>
-                        </tr>
+                    <tbody id="table-send-body">
+                        <template id="send-row-template">
+                            <tr class="row">
+                                <td class="name"></td>
+                                <td class="amount"></td>
+                                <td class="date"></td>
+                            </tr>
+                        </template>
                     </tbody>
                 </table>
             </div>
@@ -100,22 +91,14 @@
                             <th>Date</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Mohamed</td>
-                            <td>2000</td>
-                            <td>2/10/2022</td>
-                        </tr>
-                        <tr>
-                            <td>Mohamed</td>
-                            <td>2000</td>
-                            <td>2/10/2022</td>
-                        </tr>
-                        <tr>
-                            <td>Mohamed</td>
-                            <td>2000</td>
-                            <td>2/10/2022</td>
-                        </tr>
+                    <tbody id="table-receive-body">
+                        <template id="receive-row-template">
+                            <tr class="row">
+                                <td class="name"></td>
+                                <td class="amount"></td>
+                                <td class="date"></td>
+                            </tr>
+                        </template>
                     </tbody>
                 </table>
             </div>

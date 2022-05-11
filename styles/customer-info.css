@@ -52,6 +52,9 @@
 .customer-section .customer-info .balance {
   font-size: 1.8rem;
 }
+.customer-section .customer-info .balance .amount {
+  color: blue;
+}
 @media (max-width: 991px) {
   .customer-section .trans {
     grid-column: 1 / span 2;
