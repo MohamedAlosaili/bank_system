@@ -1,45 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Font Awesome cdn -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <!-- CSS files -->
-    <link rel="stylesheet" href="../styles/main.css">
-    <link rel="stylesheet" href="../styles/customers.css">
+    <link rel="stylesheet" href="../styles/main.css" />
+    <link rel="stylesheet" href="../styles/customers.css" />
     <!-- Google fonts (Open Sans) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <title>Monfer Bank | Customers</title>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <!-- Start Header -->
     <header class="header">
-        <div class="container">
-            <a href="home.html" class="logo">
-                <i class="logo-icon fa-solid fa-building-columns"></i>
-                Monfer
-            </a>
-            <nav class="nav-links" id="nav-links">
-                <a href="home.html" class="nav-item">Home</a>
-                <a href="customers.html" class="nav-item active">Customers</a>
-                <a href="transactions.html" class="nav-item">Transactions</a>
-            </nav>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+      <div class="container">
+        <a href="home.html" class="logo">
+          <i class="logo-icon fa-solid fa-building-columns"></i>
+          Monfer
+        </a>
+        <nav class="nav-links" id="nav-links">
+          <a href="home.html" class="nav-item">Home</a>
+          <a href="customers.html" class="nav-item active">Customers</a>
+          <a href="transactions.html" class="nav-item">Transactions</a>
+        </nav>
+        <div class="hamburger" id="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
+      </div>
     </header>
     <!-- End Header -->
 
@@ -48,32 +52,35 @@
 
     <!-- Start Customer List -->
     <section class="customers-list">
-        <div class="container">
-            <h1 class="title">Customers</h1>
-            <div class="customers-cards" id="customers-cards">
-                <template id="card-template">
-                    <div class="card">
-                        <img src="https://via.placeholder.com/150" alt="Customer image" class="img">
-                        <h3 class="customer-name"></h3>
-                        <div class="balance"></div>
-                        <a href="customer-info.html" class="btn details">See Details</a>
-                    </div>
-                </template>
+      <div class="container">
+        <h1 class="title">Customers</h1>
+        <div class="customers-cards" id="customers-cards">
+          <template id="card-template">
+            <div class="card">
+              <img
+                src="https://via.placeholder.com/150"
+                alt="Customer image"
+                class="img"
+              />
+              <h3 class="customer-name"></h3>
+              <div class="balance"></div>
+              <a href="customer-info.html" class="btn details">See Details</a>
             </div>
+          </template>
         </div>
+      </div>
     </section>
     <!-- End Customer List -->
 
     <!-- Start Footer -->
-    <footer class="footer">
+    <!-- <footer class="footer">
         Created by <span class="name">Mohamed</span> <a class="fa-brands fa-github" target="_blank"
             href="https://github.com/MohamedAlosaili/bank_system"></a>
         <span id="year"></span>
-    </footer>
+    </footer> -->
     <!-- End Footer -->
 
     <script src="../js/main.js"></script>
     <script src="../js/customers.js"></script>
-</body>
-
+  </body>
 </html>

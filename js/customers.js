@@ -12,7 +12,6 @@ async function getCustomersInfo() {
   });
   const data = await res.json();
 
-  console.log(data);
   createCards(data);
 }
 
@@ -35,6 +34,7 @@ function createCards(data) {
   detailsBtn.forEach((btn) => {
     btn.addEventListener("click", (e) => {
       localStorage.setItem("customer-id", e.target.parentElement.dataset.id);
+      localStorage.setItem("customer-name", e.target.parentElement.dataset.id);
     });
   });
 }
