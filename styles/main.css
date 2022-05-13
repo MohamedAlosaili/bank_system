@@ -161,7 +161,6 @@ header .container {
     background-color: #fff;
     border-radius: 0.5rem;
     overflow: hidden;
-    /* border: 2px solid transparent; */
     -webkit-transition: var(--transition-delay, 0.3s);
     -moz-transition: var(--transition-delay, 0.3s);
     transition: var(--transition-delay, 0.3s);
