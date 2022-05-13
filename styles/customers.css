@@ -17,7 +17,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* align-items: center; */
   background-color: #fff;
   border-radius: 0.5rem;
   overflow: hidden;
@@ -43,4 +42,36 @@
 .customers-cards .card .balance .amount {
   color: blue;
 }
+/* Start Skeleton Loader */
+.skeleton {
+  animation: skeleton-loading 1s linear infinite alternate;
+}
+@keyframes skeleton-loading {
+  0%{
+    background-color: hsl(200, 20%, 80%);
+  }
+  100%{
+    background-color: hsl(200, 20%, 95%);
+  }
+}
+.skeleton-img{
+  width: 100%;
+  height: 30rem;
+}
+.skeleton-text {
+  width: 100%;
+  height: 1.2rem;
+  margin-bottom: 1rem;
+  border-radius: .5rem
+}
+.skeleton-text-body {
+  width: 75%
+}
+.skeleton-link {
+  display: block;
+  height: 4rem;
+  width: 15rem;
+  border-radius: .5rem;
+}
+/* End Skeleton Loader */
 /* End Customer List */
