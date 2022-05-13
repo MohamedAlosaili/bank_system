@@ -13,6 +13,21 @@
   background-color: #fff;
   border-spacing: 0;
   padding: 2rem;
+  position: relative;
+}
+@media (max-width: 575px) {
+  .transactions-history .table .date {
+    display: none;
+  }
+  .transactions-history .table::before {
+    content: "* date column doesn't appear in small devices";
+    position: absolute;
+    top: -2.5rem;
+    left: 0;
+    font-size: 1.5rem;
+    text-transform: capitalize;
+    color: red;
+  }
 }
 .transactions-history .table thead th {
   font-size: 1.8rem;

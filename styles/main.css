@@ -25,6 +25,8 @@ html {
 body {
   background-color: var(--background-color, #e4daca);
   color: var(--color, #000);
+  min-height: 100vh;
+  position: relative;
 }
 .space-top {
   height: 15rem;
@@ -207,7 +209,7 @@ header .container {
 /* End Header */
 /* Start Landing */
 .landing .container {
-  min-height: 100vh;
+  min-height: calc(100vh - 5rem);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -262,6 +264,7 @@ header .container {
 }
 .landing-image {
   flex: 40%;
+  position: relative;
 }
 @media (max-width: 991px) {
   .landing-image {
@@ -271,6 +274,60 @@ header .container {
 .landing-image .img {
   width: 100%;
   max-width: 38rem;
+}
+.landing-image .message {
+  position: absolute;
+  top: -8rem;
+  right: 16rem;
+}
+@media (max-width: 1199px) {
+  .landing-image .message {
+    right: 10rem;
+  }
+}
+@media (max-width: 575px) {
+  .landing-image .message {
+    right: 12rem;
+  }
+}
+.landing-image .message .circle {
+  position: absolute;
+  display: block;
+  background-color: #fff;
+  border: 1px solid #000;
+  height: 10rem;
+  width: 12rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  text-transform: capitalize;
+  border-radius: 50%;
+  opacity: 0;
+  animation: transparency 0.5s 1s forwards;
+}
+.landing-image .message .circle:nth-of-type(1) {
+  height: 1.5rem;
+  width: 1.5rem;
+  top: 10rem;
+  left: -4rem;
+}
+.landing-image .message .circle:nth-of-type(2) {
+  height: 2.5rem;
+  width: 2.5rem;
+  top: 8rem;
+  left: -1.5rem;
+  animation-delay: 1.5s;
+}
+.landing-image .message .circle:nth-of-type(3) {
+  padding: 0.5rem 1rem;
+  text-align: center;
+  animation-delay: 2s;
+}
+@keyframes transparency {
+  100% {
+    opacity: 1;
+  }
 }
 /* End Landing */
 /* Start Footer */

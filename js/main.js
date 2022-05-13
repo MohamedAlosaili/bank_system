@@ -12,4 +12,4 @@ window.addEventListener("scroll", () => {
   mobileMenu.classList.remove("active");
 });
 
-document.querySelector("#year").innerText = new Date().getFullYear();
+document.querySelector("#year").innerHTML = new Date().getFullYear();

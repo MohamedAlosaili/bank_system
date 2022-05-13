@@ -85,7 +85,7 @@
   padding: 1rem 0.5rem;
   border: 1px solid #eee;
 }
-.customer-section .trans tbody tr:nth-child(even) {
+.customer-section .trans tbody tr:nth-of-type(even) {
   background-color: #f6f6f6;
 }
 /* End Customer Section */
@@ -135,6 +135,7 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 4rem;
+  position: relative;
 }
 .transfer-box .field .label {
   font-size: 1.5rem;
@@ -153,6 +154,14 @@
 }
 .transfer-box .field select.input {
   cursor: pointer;
+}
+.transfer-box .field:nth-child(2).non-valid::before {
+  content: "Value Not Valid";
+  position: absolute;
+  bottom: -2rem;
+  left: 0.5rem;
+  height: 2rem;
+  color: red;
 }
 .transfer-box .submit {
   display: block;
@@ -173,3 +182,48 @@
   cursor: pointer;
 }
 /* End Transefer Container */
+/* Start Warning Popup */
+.warning {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0 0 0 / 0.6);
+  opacity: 0;
+  z-index: -100;
+  -webkit-transition: var(--transition-delay, 0.3s);
+  -moz-transition: var(--transition-delay, 0.3s);
+  transition: var(--transition-delay, 0.3s);
+}
+.warning.active {
+  opacity: 1;
+  z-index: 100;
+}
+.warning .warn-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  height: 18rem;
+  width: 40rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  padding: 4rem;
+  border-radius: 0.5rem;
+  -webkit-transition: var(--transition-delay, 0.3s);
+  -moz-transition: var(--transition-delay, 0.3s);
+  transition: var(--transition-delay, 0.3s);
+}
+.warning.active .warn-box {
+  transform: translate(-50%, -50%) scale(1);
+}
+.warning .warn-box .title {
+  font-size: 1.5rem;
+  margin-bottom: 3rem;
+  text-transform: capitalize;
+}
+/* End Warning Popup */

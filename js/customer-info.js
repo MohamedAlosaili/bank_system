@@ -1,12 +1,23 @@
 const API_URL = "https://vast-meadow-86256.herokuapp.com";
 
-const customerId = localStorage.getItem("customer-id");
-const customerName = localStorage.getItem("customer-name");
+const customerId = sessionStorage.getItem("customer-id");
+const customers = JSON.parse(sessionStorage.getItem("customers-info"));
 
 const transLink = document.querySelector("#transfer-link");
 const transContainer = document.querySelector("#transfer-container");
 const closeTransPopup = document.querySelector("#close-icon");
 const infoSection = document.querySelector("#info-section");
+
+// Fill Customer select list
+const customerList = document.querySelector("#customer-list");
+const optionTemplate = document.querySelector("#option-template");
+
+// Submit form function
+const transForm = document.querySelector("#transfer-form");
+const amountInput = document.querySelector("[name='amount']");
+
+const warning = document.querySelector("#warning");
+const warningCloseBtn = warning.querySelector("#warning-btn");
 
 transLink.addEventListener("click", () => {
   transContainer.classList.add("active");
@@ -16,32 +27,132 @@ closeTransPopup.addEventListener("click", () => {
   transContainer.classList.remove("active");
 });
 
+warningCloseBtn.addEventListener("click", () =>
+  warning.classList.remove("active")
+);
+
 // API Functions calls
 getCustomerInfo();
 getTransferInfo();
-getAllCustomersInfo();
+fillInfoSection();
+fillSelectionList();
 
-async function getCustomerInfo() {
-  const res = await fetch(`${API_URL}/customers/${customerId}`, {
-    method: "GET",
-    headers: {
-      "Content-type": "application/json",
-    },
-  });
-  const data = await res.json();
+function getCustomerInfo() {
+  const customerObj = customers.filter((customer) => {
+    return customer._id == customerId;
+  })[0];
 
-  fillInfoSection(data);
-  return data;
+  return customerObj;
 }
 
 // Info section script
-function fillInfoSection(data) {
-  infoSection.querySelector(".name").innerText = data.name;
-  infoSection.querySelector(".email").innerText = data.email;
+function fillInfoSection() {
+  infoSection.querySelector(".name").innerText = getCustomerInfo().name;
+  infoSection.querySelector(".email").innerText = getCustomerInfo().email;
   infoSection.querySelector(
     ".balance"
-  ).innerHTML = `Balance <span class="amount">${data.currentBalance} </span>`;
+  ).innerHTML = `Balance <span class="amount">${
+    getCustomerInfo().currentBalance
+  } </span>`;
 }
+
+function fillSelectionList() {
+  const customersArr = customers.filter((customer) => {
+    return customer._id != getCustomerInfo()._id;
+  });
+
+  customerList.innerHTML = "";
+  for (let i = 0; i < customersArr.length; i++)
+    customerList.append(optionTemplate.content.cloneNode(true));
+
+  const options = customerList.querySelectorAll(".option");
+
+  options.forEach((option, idx) => {
+    option.innerText = customersArr[idx].name;
+    option.setAttribute("value", customersArr[idx]._id);
+  });
+}
+
+warning.querySelector(".warn-balance").innerText =
+  getCustomerInfo().currentBalance;
+
+let receiverObj;
+
+transForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const receiveId = customerList.value;
+
+  receiverObj = customers.filter((customer) => {
+    return customer._id == receiveId;
+  })[0];
+
+  if (
+    +amountInput.value > 0 &&
+    +amountInput.value <= getCustomerInfo().currentBalance
+  ) {
+    amountInput.parentElement.classList.remove("non-valid");
+    sendTransferData(receiverObj.name, receiverObj._id);
+  } else if (+amountInput.value > getCustomerInfo().currentBalance) {
+    amountInput.parentElement.classList.add("non-valid");
+    warning.classList.add("active");
+  } else {
+    amountInput.parentElement.classList.add("non-valid");
+  }
+});
+
+async function sendTransferData(receiveName, receiveId) {
+  const res = await fetch(`${API_URL}/transfers`, {
+    method: "POST",
+    headers: { "Content-type": "application/json" },
+    body: JSON.stringify({
+      amount: +amountInput.value,
+      sender: {
+        name: getCustomerInfo().name,
+        id: getCustomerInfo()._id,
+      },
+      receiver: {
+        name: receiveName,
+        id: receiveId,
+      },
+    }),
+  });
+  const data = await res.json();
+
+  let senderNewBalance = getCustomerInfo().currentBalance - +amountInput.value;
+  let receiverNewBalance = receiverObj.currentBalance + +amountInput.value;
+
+  console.log(senderNewBalance);
+  console.log(receiverNewBalance);
+  if (data._id) {
+    updateCustomerBalance(senderNewBalance, getCustomerInfo()._id, 1);
+    updateCustomerBalance(receiverNewBalance, receiverObj._id, 2);
+  }
+}
+
+async function updateCustomerBalance(newBalance, id, callNum) {
+  try {
+    const res = await fetch(`${API_URL}/customers/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        currentBalance: newBalance,
+      }),
+    });
+    const data = await res.json();
+
+    if (data._id && callNum == 2) {
+      location.reload();
+      window.open("../pages/success-transfer.html", "_self");
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+// Send and Receive sections script
 
 async function getTransferInfo() {
   const res = await fetch(`${API_URL}/transfers/`, {
@@ -52,83 +163,11 @@ async function getTransferInfo() {
   });
   const data = await res.json();
 
+  console.log(data);
   fillSendSection(data);
   fillReceiveSection(data);
 }
 
-// Transfer opration script
-async function getAllCustomersInfo() {
-  const res = await fetch(`${API_URL}/customers`, {
-    headers: { "Content-type": "application/json" },
-  });
-
-  const data = await res.json();
-
-  console.log(data);
-  fillSelectionList(data);
-}
-
-// Fill Customer select list
-const customerlist = document.querySelector("#customer-list");
-const optionTemplate = document.querySelector("#option-template");
-
-function fillSelectionList(data) {
-  customerlist.innerHTML = "";
-  for (let i = 0; i < data.length; i++)
-    customerlist.append(optionTemplate.content.cloneNode(true));
-
-  const customers = document.querySelectorAll(".option");
-
-  customers.forEach((customer, idx) => {
-    customer.innerText = data[idx].name;
-    customer.setAttribute("value", `${data[idx].name}-${data[idx]._id}`);
-  });
-}
-
-// Submit form function
-const transForm = document.querySelector("#transfer-form");
-const amountInput = document.querySelector("[name='amount']");
-
-transForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  const receiveName = customerlist.value.split("-")[0];
-  const receiveId = customerlist.value.split("-")[1];
-
-  console.log(receiveName);
-  console.log(receiveId);
-  // getCustomerInfo()
-  //   .then((res) => res.json())
-  //   .then((data) => console.log(data));
-
-  if (+amountInput > 0 && +amountInput <= getCustomerInfo().currentBalance) {
-    console.log("True");
-    // sendTransferData().then(res => res.json()).then;
-    sendTransferData();
-  }
-
-  async function sendTransferData() {
-    const res = await fetch(`${API_URL}/transfers`, {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify({
-        amount: amountInput,
-        sender: {
-          name: await getCustomerInfo().name,
-          id: await getCustomerInfo()._id,
-        },
-        receiver: {
-          name: receiveName,
-          id: receiveId,
-        },
-      }),
-    });
-    const data = await res.json();
-    console.log(data);
-  }
-});
-
-// Send and Receive sections script
 const sendBody = document.querySelector("#table-send-body");
 const receiveBody = document.querySelector("#table-receive-body");
 const dataTemplate = document.querySelector("#data-template");
@@ -137,31 +176,32 @@ function fillSendSection(data) {
   let sendArr = [];
 
   for (let i = 0; i < data.length; i++) {
-    if (data[i].sender.id === customerId) sendArr.push(data[i]);
+    if (data[i].sender.id == customerId) sendArr.unshift(data[i]);
   }
-
-  fillBodyTable(sendArr, sendBody, "sender");
+  fillTableBody(sendArr, sendBody, "receiver");
 }
 
 function fillReceiveSection(data) {
   let receiveArr = [];
 
   for (let i = 0; i < data.length; i++) {
-    if (data[i].receiver.id === customerId) receiveArr.push(data[i]);
+    if (data[i].receiver.id == customerId) receiveArr.unshift(data[i]);
   }
-
-  fillBodyTable(receiveArr, receiveBody, "receiver");
+  fillTableBody(receiveArr, receiveBody, "sender");
 }
 
-function fillBodyTable(arrOfRows, container, dataType) {
+function fillTableBody(arrOfRows, container, sendOrReceive) {
+  container.innerHTML = "";
+
   arrOfRows.forEach(() => {
     container.append(dataTemplate.content.cloneNode(true));
   });
 
-  const rows = document.querySelectorAll(".row");
+  const rows = container.querySelectorAll(".row");
 
   rows.forEach((row, idx) => {
-    row.querySelector(".name").innerText = arrOfRows[idx][`${dataType}`].name;
+    row.querySelector(".name").innerText =
+      arrOfRows[idx][`${sendOrReceive}`].name;
     row.querySelector(".amount").innerText = arrOfRows[idx].amount;
     row.querySelector(".date").innerText = arrOfRows[idx].transferDate;
   });

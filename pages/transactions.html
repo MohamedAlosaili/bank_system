@@ -53,42 +53,23 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>#</th>
                         <th>From</th>
                         <th>To</th>
                         <th>Amount</th>
-                        <th>Date</th>
+                        <th class="date">Date</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Mohamed</td>
-                        <td>Faisal</td>
-                        <td>10000</td>
-                        <td>22/12/2022</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Saleh</td>
-                        <td>Faisal</td>
-                        <td>20000</td>
-                        <td>22/12/2022</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Osama</td>
-                        <td>Faisal</td>
-                        <td>5000</td>
-                        <td>22/12/2022</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Ibrahim</td>
-                        <td>Mansor</td>
-                        <td>10000</td>
-                        <td>22/12/2022</td>
-                    </tr>
+                <tbody id="t-body">
+                    <template id="body-template">
+                        <tr class="row">
+                            <td class="num"></td>
+                            <td class="sender"></td>
+                            <td class="receiver"></td>
+                            <td class="amount"></td>
+                            <td class="date"></td>
+                        </tr>
+                    </template>
                 </tbody>
             </table>
         </div>
@@ -106,6 +87,8 @@
     <!-- End Footer -->
 
 
+    <script src="../js/main.js"></script>
+    <script src="../js/transaction.js"></script>
 </body>
 
 </html>
