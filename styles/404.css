@@ -1,0 +1,36 @@
+.error .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5rem;
+  padding-bottom: 10rem;
+}
+@media (max-width: 767px) {
+  .error .container {
+    flex-direction: column-reverse;
+  }
+}
+.error .content .title {
+  font-size: 6rem;
+  text-transform: capitalize;
+  margin-bottom: 5rem;
+}
+.error .content .sub-title {
+  font-size: 4rem;
+  font-weight: 400;
+  max-width: 35rem;
+  margin-bottom: 3rem;
+}
+.error .content .sub-title span {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.error .content .btn {
+  font-size: 2rem;
+}
+.error .image {
+  max-width: 50%;
+}
+.error .image .img {
+  width: 100%;
+}

@@ -10,9 +10,8 @@ async function getTransferHistory() {
     const data = await res.json();
 
     fillTransferTable(data);
-    console.log(data);
   } catch (err) {
-    console.log(err);
+    window.open("../pages/404.html", "_self");
   }
 }
 

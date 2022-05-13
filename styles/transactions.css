@@ -44,6 +44,7 @@
   padding: 1rem;
   text-align: center;
   border: 1px solid #eee;
+  line-height: 1.5;
 }
 .transactions-history .table tbody tr:nth-child(even) {
   background-color: #f6f6f6;

@@ -18,7 +18,7 @@ async function getCustomersInfo() {
 
     createCards(data);
   } catch (err) {
-    console.log(err);
+    window.open("../pages/404.html", "_self");
   }
 }
 
@@ -31,8 +31,8 @@ function createCards(data) {
   cards.forEach((card, idx) => {
     sessionStorage.setItem("customers-info", JSON.stringify(data));
     card.dataset.id = data[idx]._id;
-    // card.querySelector()
-    card.querySelector(".customer-name").innerText = data[idx].name;
+    card.querySelector(".img").src = data[idx].avatarImg;
+    card.querySelector(".customer-name").innerText = `${data[idx].name}`;
     card.querySelector(
       ".balance"
     ).innerHTML = `Balance: <span class="amount">${data[idx].currentBalance}</span>`;
@@ -42,7 +42,10 @@ function createCards(data) {
 
   detailsBtn.forEach((btn) => {
     btn.addEventListener("click", (e) => {
-      sessionStorage.setItem("customer-id", e.target.parentElement.dataset.id);
+      sessionStorage.setItem(
+        "customer-id",
+        e.target.parentElement.parentElement.dataset.id
+      );
     });
   });
 }

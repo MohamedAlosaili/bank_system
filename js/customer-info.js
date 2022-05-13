@@ -6,7 +6,7 @@ const customers = JSON.parse(sessionStorage.getItem("customers-info"));
 const transLink = document.querySelector("#transfer-link");
 const transContainer = document.querySelector("#transfer-container");
 const closeTransPopup = document.querySelector("#close-icon");
-const infoSection = document.querySelector("#info-section");
+const infoSection = document.querySelector("#customer-info");
 
 // Fill Customer select list
 const customerList = document.querySelector("#customer-list");
@@ -15,9 +15,14 @@ const optionTemplate = document.querySelector("#option-template");
 // Submit form function
 const transForm = document.querySelector("#transfer-form");
 const amountInput = document.querySelector("[name='amount']");
+const loading = document.querySelector("#loading");
 
 const warning = document.querySelector("#warning");
 const warningCloseBtn = warning.querySelector("#warning-btn");
+
+const sendBody = document.querySelector("#table-send-body");
+const receiveBody = document.querySelector("#table-receive-body");
+const dataTemplate = document.querySelector("#data-template");
 
 transLink.addEventListener("click", () => {
   transContainer.classList.add("active");
@@ -47,11 +52,12 @@ function getCustomerInfo() {
 
 // Info section script
 function fillInfoSection() {
+  infoSection.querySelector(".img").src = getCustomerInfo().avatarImg;
   infoSection.querySelector(".name").innerText = getCustomerInfo().name;
   infoSection.querySelector(".email").innerText = getCustomerInfo().email;
   infoSection.querySelector(
     ".balance"
-  ).innerHTML = `Balance <span class="amount">${
+  ).innerHTML = `Balance: <span class="amount">${
     getCustomerInfo().currentBalance
   } </span>`;
 }
@@ -91,6 +97,7 @@ transForm.addEventListener("submit", (e) => {
     +amountInput.value > 0 &&
     +amountInput.value <= getCustomerInfo().currentBalance
   ) {
+    loading.classList.add("active");
     amountInput.parentElement.classList.remove("non-valid");
     sendTransferData(receiverObj.name, receiverObj._id);
   } else if (+amountInput.value > getCustomerInfo().currentBalance) {
@@ -102,31 +109,36 @@ transForm.addEventListener("submit", (e) => {
 });
 
 async function sendTransferData(receiveName, receiveId) {
-  const res = await fetch(`${API_URL}/transfers`, {
-    method: "POST",
-    headers: { "Content-type": "application/json" },
-    body: JSON.stringify({
-      amount: +amountInput.value,
-      sender: {
-        name: getCustomerInfo().name,
-        id: getCustomerInfo()._id,
-      },
-      receiver: {
-        name: receiveName,
-        id: receiveId,
-      },
-    }),
-  });
-  const data = await res.json();
+  try {
+    const res = await fetch(`${API_URL}/transfers`, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({
+        amount: +amountInput.value,
+        sender: {
+          name: getCustomerInfo().name,
+          id: getCustomerInfo()._id,
+        },
+        receiver: {
+          name: receiveName,
+          id: receiveId,
+        },
+      }),
+    });
+    const data = await res.json();
 
-  let senderNewBalance = getCustomerInfo().currentBalance - +amountInput.value;
-  let receiverNewBalance = receiverObj.currentBalance + +amountInput.value;
+    let senderNewBalance =
+      getCustomerInfo().currentBalance - +amountInput.value;
+    let receiverNewBalance = receiverObj.currentBalance + +amountInput.value;
 
-  console.log(senderNewBalance);
-  console.log(receiverNewBalance);
-  if (data._id) {
-    updateCustomerBalance(senderNewBalance, getCustomerInfo()._id, 1);
-    updateCustomerBalance(receiverNewBalance, receiverObj._id, 2);
+    console.log(senderNewBalance);
+    console.log(receiverNewBalance);
+    if (data._id) {
+      updateCustomerBalance(senderNewBalance, getCustomerInfo()._id, 1);
+      updateCustomerBalance(receiverNewBalance, receiverObj._id, 2);
+    }
+  } catch (err) {
+    window.open("../pages/404.html", "_self");
   }
 }
 
@@ -145,32 +157,32 @@ async function updateCustomerBalance(newBalance, id, callNum) {
 
     if (data._id && callNum == 2) {
       location.reload();
-      window.open("../pages/success-transfer.html", "_self");
+      window.open("../pages/transactions.html", "_self");
     }
   } catch (err) {
-    console.log(err);
+    window.open("../pages/404.html", "_self");
   }
 }
 
 // Send and Receive sections script
 
 async function getTransferInfo() {
-  const res = await fetch(`${API_URL}/transfers/`, {
-    method: "GET",
-    headers: {
-      "Content-type": "application/json",
-    },
-  });
-  const data = await res.json();
+  try {
+    const res = await fetch(`${API_URL}/transfers/`, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+    const data = await res.json();
 
-  console.log(data);
-  fillSendSection(data);
-  fillReceiveSection(data);
+    console.log(data);
+    fillSendSection(data);
+    fillReceiveSection(data);
+  } catch (err) {
+    window.open("../pages/404.html", "_self");
+  }
 }
-
-const sendBody = document.querySelector("#table-send-body");
-const receiveBody = document.querySelector("#table-receive-body");
-const dataTemplate = document.querySelector("#data-template");
 
 function fillSendSection(data) {
   let sendArr = [];
