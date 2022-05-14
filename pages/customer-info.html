@@ -64,7 +64,7 @@
                     <thead>
                         <h4 class="title">Send</h4>
                         <tr>
-                            <th>Send To</th>
+                            <th>Sent To</th>
                             <th>Amount</th>
                             <th>Date</th>
                         </tr>
@@ -85,7 +85,7 @@
                     <h4 class="title">Receive</h4>
                     <thead>
                         <tr>
-                            <th>Receive From</th>
+                            <th>Received From</th>
                             <th>Amount</th>
                             <th>Date</th>
                         </tr>
@@ -97,7 +97,7 @@
     </section>
     <!-- End Customer Info -->
 
-    <!-- Transfer Field Container -->
+    <!-- Start Transfer Field Container -->
     <section class="transfer-container" id="transfer-container">
         <div class="loading" id="loading">Please Wait <span class="loader"></span></div>
         <div class="transfer-box">
@@ -106,10 +106,8 @@
                     <label for="customer-list" class="label">Select Customer:</label>
                     <select name="customer-list" class="input" id="customer-list">
                         <template id="option-template">
-                            <option value="" class="option">
+                            <option value="" class="option"></option>
                         </template>
-                        Select Customer
-                        </option>
                     </select>
                 </div>
                 <div class="field">
@@ -120,16 +118,20 @@
                 <span class="close-icon fa-solid fa-xmark" id="close-icon"></span>
             </form>
         </div>
-    </section>
-
-    <!-- Warning Popup -->
-    <section class="warning" id="warning">
-        <div class="warn-box">
-            <h3 class="title">Sorry You can't transfer more then <span class="warn-balance"></span></h3>
-            <button class="btn" id="warning-btn">OK</button>
+        <!-- Warning Popup -->
+        <div class="warning" id="warning">
+            <div class="content">
+                <div class="warn-box">
+                    <h3 class="title">Sorry You can't transfer more then <span class="warn-balance"></span></h3>
+                    <button class="btn" id="warning-btn">OK</button>
+                </div>
+                <img src="../imgs/over-balance.png" alt="Man Thinkin" class="over-balance-img">
+            </div>
         </div>
-        <img src="../imgs/over-balance.png" alt="Man Thinkin" class="over-balance-img">
     </section>
+    <!-- End Transfer Field Container -->
+
+
 
     <!-- Start Footer -->
     <footer class="footer">

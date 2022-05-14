@@ -1,4 +1,5 @@
 const API_URL = "https://vast-meadow-86256.herokuapp.com";
+
 const tableBody = document.querySelector("#t-body");
 const bodyTemplate = document.querySelector("#body-template");
 

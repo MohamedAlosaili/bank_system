@@ -81,7 +81,8 @@ a {
   transition: background-color var(--transition-delay, 0.3s),
     color var(--transition-delay, 0.3s);
 }
-.btn:hover {
+.btn:hover,
+.btn:focus {
   background-color: var(--black, #000);
   color: var(--white, #fff);
 }

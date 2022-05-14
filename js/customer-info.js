@@ -1,28 +1,30 @@
 const API_URL = "https://vast-meadow-86256.herokuapp.com";
-
+// SessionStorage Variables
 const customerId = sessionStorage.getItem("customer-id");
 const customers = JSON.parse(sessionStorage.getItem("customers-info"));
-
-const transLink = document.querySelector("#transfer-link");
-const transContainer = document.querySelector("#transfer-container");
-const closeTransPopup = document.querySelector("#close-icon");
+// Info Section Variables
 const infoSection = document.querySelector("#customer-info");
-
-// Fill Customer select list
-const customerList = document.querySelector("#customer-list");
-const optionTemplate = document.querySelector("#option-template");
-
-// Submit form function
-const transForm = document.querySelector("#transfer-form");
-const amountInput = document.querySelector("[name='amount']");
-const loading = document.querySelector("#loading");
-
-const warning = document.querySelector("#warning");
-const warningCloseBtn = warning.querySelector("#warning-btn");
-
+const transLink = document.querySelector("#transfer-link");
+// Send & Receive Variables
 const sendBody = document.querySelector("#table-send-body");
 const receiveBody = document.querySelector("#table-receive-body");
 const dataTemplate = document.querySelector("#data-template");
+// Transfer Popup
+const transContainer = document.querySelector("#transfer-container");
+const transForm = document.querySelector("#transfer-form");
+const customerList = document.querySelector("#customer-list");
+const optionTemplate = document.querySelector("#option-template");
+const amountInput = document.querySelector("[name='amount']");
+const closeTransPopup = document.querySelector("#close-icon");
+const loading = document.querySelector("#loading");
+const warning = document.querySelector("#warning");
+const warningCloseBtn = warning.querySelector("#warning-btn");
+
+// Functions calls
+getCustomerInfo();
+getTransferInfo();
+fillInfoSection();
+fillSelectionList();
 
 transLink.addEventListener("click", () => {
   transContainer.classList.add("active");
@@ -32,15 +34,40 @@ closeTransPopup.addEventListener("click", () => {
   transContainer.classList.remove("active");
 });
 
-warningCloseBtn.addEventListener("click", () =>
-  warning.classList.remove("active")
-);
+warning.querySelector(".warn-balance").innerText =
+  getCustomerInfo().currentBalance;
 
-// API Functions calls
-getCustomerInfo();
-getTransferInfo();
-fillInfoSection();
-fillSelectionList();
+let receiverObj;
+
+transForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const receiveId = customerList.value;
+
+  receiverObj = customers.filter((customer) => {
+    return customer._id == receiveId;
+  })[0];
+
+  if (
+    +amountInput.value > 0 &&
+    +amountInput.value <= getCustomerInfo().currentBalance
+  ) {
+    loading.classList.add("active");
+    amountInput.parentElement.classList.remove("non-valid");
+    sendTransferData();
+  } else if (+amountInput.value > getCustomerInfo().currentBalance) {
+    amountInput.parentElement.classList.add("non-valid");
+    warning.classList.add("active");
+    amountInput.value = "";
+  } else {
+    amountInput.parentElement.classList.add("non-valid");
+  }
+});
+
+warningCloseBtn.addEventListener("click", () => {
+  warning.classList.remove("active");
+  amountInput.parentElement.classList.remove("non-valid");
+});
 
 function getCustomerInfo() {
   const customerObj = customers.filter((customer) => {
@@ -79,36 +106,7 @@ function fillSelectionList() {
   });
 }
 
-warning.querySelector(".warn-balance").innerText =
-  getCustomerInfo().currentBalance;
-
-let receiverObj;
-
-transForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  const receiveId = customerList.value;
-
-  receiverObj = customers.filter((customer) => {
-    return customer._id == receiveId;
-  })[0];
-
-  if (
-    +amountInput.value > 0 &&
-    +amountInput.value <= getCustomerInfo().currentBalance
-  ) {
-    loading.classList.add("active");
-    amountInput.parentElement.classList.remove("non-valid");
-    sendTransferData(receiverObj.name, receiverObj._id);
-  } else if (+amountInput.value > getCustomerInfo().currentBalance) {
-    amountInput.parentElement.classList.add("non-valid");
-    warning.classList.add("active");
-  } else {
-    amountInput.parentElement.classList.add("non-valid");
-  }
-});
-
-async function sendTransferData(receiveName, receiveId) {
+async function sendTransferData() {
   try {
     const res = await fetch(`${API_URL}/transfers`, {
       method: "POST",
@@ -120,8 +118,8 @@ async function sendTransferData(receiveName, receiveId) {
           id: getCustomerInfo()._id,
         },
         receiver: {
-          name: receiveName,
-          id: receiveId,
+          name: receiverObj.name,
+          id: receiveId._id,
         },
       }),
     });
@@ -131,8 +129,6 @@ async function sendTransferData(receiveName, receiveId) {
       getCustomerInfo().currentBalance - +amountInput.value;
     let receiverNewBalance = receiverObj.currentBalance + +amountInput.value;
 
-    console.log(senderNewBalance);
-    console.log(receiverNewBalance);
     if (data._id) {
       updateCustomerBalance(senderNewBalance, getCustomerInfo()._id, 1);
       updateCustomerBalance(receiverNewBalance, receiverObj._id, 2);
@@ -156,7 +152,6 @@ async function updateCustomerBalance(newBalance, id, callNum) {
     const data = await res.json();
 
     if (data._id && callNum == 2) {
-      location.reload();
       window.open("../pages/transactions.html", "_self");
     }
   } catch (err) {
@@ -165,18 +160,11 @@ async function updateCustomerBalance(newBalance, id, callNum) {
 }
 
 // Send and Receive sections script
-
 async function getTransferInfo() {
   try {
-    const res = await fetch(`${API_URL}/transfers/`, {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-      },
-    });
+    const res = await fetch(`${API_URL}/transfers/`);
     const data = await res.json();
 
-    console.log(data);
     fillSendSection(data);
     fillReceiveSection(data);
   } catch (err) {

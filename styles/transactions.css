@@ -1,6 +1,6 @@
 /* Start Transactions History */
 .transactions-history .container {
-  padding-bottom: 10rem;
+  padding-bottom: var(--section-padding, 10rem);
   min-height: calc(100vh - 15rem);
 }
 .transactions-history .title {
@@ -10,7 +10,7 @@
 }
 .transactions-history .table {
   width: 100%;
-  background-color: #fff;
+  background-color: var(--white, #fff);
   border-spacing: 0;
   padding: 2rem;
   position: relative;
@@ -24,23 +24,23 @@
     position: absolute;
     top: -2.5rem;
     left: 0;
-    font-size: 1.5rem;
+    font-size: var(--text-size, 1.5rem);
     text-transform: capitalize;
     color: red;
   }
 }
 .transactions-history .table thead th {
-  font-size: 1.8rem;
+  font-size: var(--text-size, 1.5rem);
   font-weight: 600;
-  background-color: #000;
-  color: #fff;
+  background-color: var(--black, #000);
+  color: var(--white, #fff);
   padding: 1rem;
 }
 .transactions-history .table thead th:not(:last-child) {
   border-right: 1px solid #eee;
 }
 .transactions-history .table tbody td {
-  font-size: 1.6rem;
+  font-size: var(--text-size, 1.5rem);
   padding: 1rem;
   text-align: center;
   border: 1px solid #eee;

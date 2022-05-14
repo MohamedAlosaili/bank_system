@@ -1,7 +1,7 @@
 const API_URL = "https://vast-meadow-86256.herokuapp.com";
 
 const cardTemplate = document.querySelector("#card-template");
-const placeholderTemplate = document.querySelector("#skeleton-template");
+const skeletonTemplate = document.querySelector("#skeleton-template");
 const cardsContainer = document.querySelector("#customers-cards");
 
 createSkeletonCards();
@@ -10,7 +10,7 @@ getCustomersInfo();
 function createSkeletonCards() {
   cardsContainer.innerHTML = "";
   for (let i = 0; i < 10; i++) {
-    cardsContainer.append(placeholderTemplate.content.cloneNode(true));
+    cardsContainer.append(skeletonTemplate.content.cloneNode(true));
   }
 }
 
@@ -30,7 +30,7 @@ function createCards(data) {
   for (let i = 0; i < data.length; i++)
     cardsContainer.append(cardTemplate.content.cloneNode(true));
 
-  // Create customer-info in sessionStorage
+  // Create array of customer-info in sessionStorage
   sessionStorage.setItem("customers-info", JSON.stringify(data));
 
   fillCustomerCards(data);
@@ -53,11 +53,11 @@ function fillCustomerCards(data) {
 function pickCustomerIdOnClick() {
   const detailsBtn = document.querySelectorAll(".card .btn.details");
 
-  detailsBtn.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
+  detailsBtn.forEach((btn, idx) => {
+    btn.addEventListener("click", () => {
       sessionStorage.setItem(
         "customer-id",
-        e.target.parentElement.parentElement.dataset.id
+        cardsContainer.querySelectorAll(".card")[idx].dataset.id
       );
     });
   });
