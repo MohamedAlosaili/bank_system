@@ -119,7 +119,7 @@ async function sendTransferData() {
         },
         receiver: {
           name: receiverObj.name,
-          id: receiveId._id,
+          id: receiverObj._id,
         },
       }),
     });
