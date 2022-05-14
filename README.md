@@ -1,17 +1,14 @@
 # Hello :wave:
 
 ## My Name: Mohammed Alosaili
-
-### Web Development intern at The Sparks Foundation
+#### Web Development intern at The Sparks Foundation
 
 ## Task-1: Basic Bank System
 
-> Give my site Test
+### > Have Look To my site
+### [demo](https://mohamedalosaili.github.io/bank_system/)
 
-## [demo](https://mohamedalosaili.github.io/bank_system/)
-
-> See Api Project I use it in "Basic Bank System" Task
-
-## [bankRestApi](https://github.com/MohamedAlosaili/bankRestApi)
+### > See Api Project I created and use it in "Basic Bank System" Task
+### [bankRestApi](https://github.com/MohamedAlosaili/bankRestApi)
 
 [This is an image](imgs/transfer-img.png)
